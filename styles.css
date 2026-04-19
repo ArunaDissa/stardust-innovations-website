@@ -59,6 +59,21 @@ strong { color: var(--text); }
 
 .logo-star { color: var(--gold); font-size: 16px; }
 
+.nav-logo-img {
+  height: 36px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.footer-logo-img {
+  height: 48px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
 .nav-links {
   display: flex; gap: 32px;
   font-size: 14px; font-weight: 500; color: var(--text-secondary);
