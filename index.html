@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stardust Innovations — Building Apps That Matter</title>
+  <meta name="description" content="Stardust Innovations is a Sri Lankan technology company building premium mobile apps. Home of Manike — Sri Lanka's exclusive dating app." />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-star">✦</span> Stardust Innovations
+      </a>
+      <div class="nav-links">
+        <a href="#apps">Apps</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+      <button class="nav-menu-btn" onclick="toggleMenu()">☰</button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu">
+      <a href="#apps" onclick="toggleMenu()">Apps</a>
+      <a href="#about" onclick="toggleMenu()">About</a>
+      <a href="#contact" onclick="toggleMenu()">Contact</a>
+      <a href="privacy.html" onclick="toggleMenu()">Privacy</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-badge">🇱🇰 Based in Sri Lanka</div>
+      <h1 class="hero-title">
+        Building Apps<br />
+        <span class="gradient-text">That Matter</span>
+      </h1>
+      <p class="hero-sub">
+        Stardust Innovations is a Sri Lankan technology company crafting premium mobile experiences for South Asia and beyond.
+      </p>
+      <div class="hero-btns">
+        <a href="#apps" class="btn-primary">Our Apps</a>
+        <a href="#about" class="btn-secondary">Learn More</a>
+      </div>
+    </div>
+    <div class="hero-stars" id="stars"></div>
+  </section>
+
+  <!-- Apps -->
+  <section class="section" id="apps">
+    <div class="container">
+      <div class="section-label">What We Build</div>
+      <h2 class="section-title">Our Apps</h2>
+      <p class="section-sub">Each app is built with care, security and the needs of South Asian users at its core.</p>
+
+      <div class="apps-grid">
+        <!-- Manike -->
+        <div class="app-card featured">
+          <div class="app-card-badge">Live Now</div>
+          <div class="app-icon manike-icon">
+            <img src="manike-icon.png" alt="Manike" onerror="this.style.display='none'" />
+            <span class="app-icon-fallback">M</span>
+          </div>
+          <div class="app-info">
+            <h3 class="app-name">Manike</h3>
+            <p class="app-tagline">Exclusive Dating · Sri Lanka</p>
+            <p class="app-desc">
+              Sri Lanka's first safety-first, identity-verified dating app designed for serious relationships. Built for Sri Lankans who value authenticity, culture and meaningful connections.
+            </p>
+            <div class="app-tags">
+              <span class="tag">🔒 NIC Verified</span>
+              <span class="tag">🇱🇰 Sri Lanka</span>
+              <span class="tag">💍 Serious Dating</span>
+            </div>
+            <div class="app-store-btns">
+              <a href="#" class="store-btn">
+                <span class="store-icon">🍎</span>
+                <span>
+                  <small>Coming soon on</small>
+                  App Store
+                </span>
+              </a>
+              <a href="#" class="store-btn">
+                <span class="store-icon">▶</span>
+                <span>
+                  <small>Coming soon on</small>
+                  Google Play
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Future app placeholder -->
+        <div class="app-card upcoming">
+          <div class="app-card-badge upcoming-badge">Coming Soon</div>
+          <div class="app-icon upcoming-icon">
+            <span>✦</span>
+          </div>
+          <div class="app-info">
+            <h3 class="app-name">Next App</h3>
+            <p class="app-tagline">Something new is coming</p>
+            <p class="app-desc">
+              We are always working on something new. Follow us to be the first to know about our next product.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section section-dark" id="about">
+    <div class="container">
+      <div class="section-label">Who We Are</div>
+      <h2 class="section-title">About Stardust Innovations</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            Stardust Innovations is a technology company based in Sri Lanka, building mobile applications for the South Asian market and the global Sri Lankan diaspora.
+          </p>
+          <p>
+            We believe great technology should feel local — designed with cultural understanding, built with world-class standards, and trusted by the people who use it every day.
+          </p>
+          <p>
+            Every app we build is guided by three principles: <strong>safety first</strong>, <strong>privacy by design</strong>, and <strong>genuine value</strong> for our users.
+          </p>
+        </div>
+        <div class="values-grid">
+          <div class="value-card">
+            <div class="value-icon">🔒</div>
+            <h4>Safety First</h4>
+            <p>Every product we build puts user safety at the centre of every decision.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">🌏</div>
+            <h4>Built for South Asia</h4>
+            <p>We understand our culture, our values and our users deeply.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">✦</div>
+            <h4>Premium Quality</h4>
+            <p>We build products that feel world-class, not compromised.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">🤝</div>
+            <h4>Trust</h4>
+            <p>We earn trust through transparency, verified identities and honest practices.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title">Contact Us</h2>
+      <p class="section-sub">For app support, business enquiries or partnership opportunities.</p>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon">📧</div>
+          <h4>General Enquiries</h4>
+          <a href="mailto:hello@stardust-innovations.com">hello@stardust-innovations.com</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">🛟</div>
+          <h4>App Support</h4>
+          <a href="mailto:support@stardust-innovations.com">support@stardust-innovations.com</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">🤝</div>
+          <h4>Business & Partnerships</h4>
+          <a href="mailto:business@stardust-innovations.com">business@stardust-innovations.com</a>
+        </div>
+      </div>
+
+      <div class="legal-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <span>·</span>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-star">✦</span> Stardust Innovations Pvt Ltd
+        </div>
+        <div class="footer-copy">
+          © 2026 Stardust Innovations. All rights reserved. · Sri Lanka 🇱🇰
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
