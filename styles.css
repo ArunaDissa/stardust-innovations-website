@@ -61,7 +61,7 @@ strong { color: var(--text); }
 .logo-star { color: var(--primary); font-size: 16px; }
 
 .nav-logo-img {
-  height: 36px;
+  height: 56px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -69,12 +69,12 @@ strong { color: var(--text); }
 }
 
 .footer-logo-img {
-  height: 48px;
+  height: 72px;
   width: auto;
   display: block;
   object-fit: contain;
   mix-blend-mode: screen;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 .nav-links {
@@ -611,7 +611,7 @@ strong { color: var(--text); }
   margin-bottom: 56px;
 }
 
-.footer-brand-col { display: flex; flex-direction: column; gap: 16px; }
+.footer-brand-col { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
 .footer-tagline {
   font-size: 14px; color: var(--text-secondary);
   line-height: 1.7; max-width: 240px;
