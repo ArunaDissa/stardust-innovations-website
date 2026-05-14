@@ -65,6 +65,7 @@ strong { color: var(--text); }
   width: auto;
   display: block;
   object-fit: contain;
+  mix-blend-mode: screen;
 }
 
 .footer-logo-img {
@@ -72,6 +73,7 @@ strong { color: var(--text); }
   width: auto;
   display: block;
   object-fit: contain;
+  mix-blend-mode: screen;
   opacity: 0.9;
 }
 
