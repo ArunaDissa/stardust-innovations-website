@@ -98,7 +98,41 @@ window.addEventListener('scroll', () => {
   }
 });
 
+// ── Scroll reveal ─────────────────────────────────────────────────────────────
+function initReveal() {
+  const elements = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  elements.forEach(el => observer.observe(el));
+}
+
+// ── Active nav on scroll ──────────────────────────────────────────────────────
+function initActiveNav() {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('nav-active'));
+        const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('nav-active');
+      }
+    });
+  }, { threshold: 0.35 });
+
+  sections.forEach(section => observer.observe(section));
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   createStars();
+  initReveal();
+  initActiveNav();
 });
