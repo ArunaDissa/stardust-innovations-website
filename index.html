@@ -7,15 +7,26 @@
   <meta name="description" content="Stardust Innovations is a Sri Lankan technology company building premium mobile apps. Home of Manike — Sri Lanka's first culture-first dating app." />
   <link rel="icon" href="favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
+  <!-- Cosmic background layers -->
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora-orb aurora-orb-1"></div>
+    <div class="aurora-orb aurora-orb-2"></div>
+    <div class="aurora-orb aurora-orb-3"></div>
+  </div>
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
   <!-- Navigation -->
-  <nav class="nav">
+  <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="/" class="nav-logo">
+      <a href="#" class="nav-logo">
         <img src="logo.png" alt="Stardust Innovations" class="nav-logo-img" />
       </a>
       <div class="nav-links">
@@ -25,7 +36,9 @@
         <a href="#contact">Contact</a>
         <a href="privacy.html">Privacy</a>
       </div>
-      <button class="nav-menu-btn" onclick="toggleMenu()">☰</button>
+      <button class="nav-menu-btn" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
     <div class="nav-mobile" id="mobileMenu">
       <a href="#apps" onclick="toggleMenu()">Apps</a>
@@ -38,37 +51,49 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="container">
-      <div class="hero-badge">🇱🇰 Based in Sri Lanka</div>
-      <h1 class="hero-title">
+    <div class="hero-rings" aria-hidden="true">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-badge reveal">
+        <span class="badge-pulse"></span>
+        🇱🇰 Based in Sri Lanka
+      </div>
+      <h1 class="hero-title reveal reveal-delay-1">
         Building Apps<br />
-        <span class="gradient-text">That Matter</span>
+        <span class="gradient-text" data-text="That Matter">That Matter</span>
       </h1>
-      <p class="hero-sub">
+      <p class="hero-sub reveal reveal-delay-2">
         Stardust Innovations is a Sri Lankan technology company crafting premium mobile experiences for South Asia and beyond.
       </p>
-      <div class="hero-btns">
-        <a href="#apps" class="btn-primary">Our Apps</a>
-        <a href="#about" class="btn-secondary">Learn More</a>
+      <div class="hero-btns reveal reveal-delay-3">
+        <a href="#apps" class="btn-primary"><span>Our Apps</span></a>
+        <a href="#about" class="btn-secondary"><span>Learn More</span></a>
       </div>
     </div>
-    <div class="hero-stars" id="stars"></div>
+    <div class="hero-scroll reveal reveal-delay-4" aria-hidden="true">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
   </section>
 
   <!-- Apps -->
   <section class="section" id="apps">
     <div class="container">
-      <div class="section-label reveal">What We Build</div>
-      <h2 class="section-title reveal reveal-delay-1">Our Apps</h2>
+      <div class="section-label reveal">✦ What We Build</div>
+      <h2 class="section-title reveal reveal-delay-1">Our <span class="gradient-text">Apps</span></h2>
       <p class="section-sub reveal reveal-delay-2">Each app is built with care, security and the needs of South Asian users at its core.</p>
 
       <div class="apps-grid">
         <!-- Manike -->
-        <div class="app-card featured reveal reveal-delay-3">
-          <div class="app-card-badge">Live Now</div>
+        <div class="app-card featured glass tilt reveal reveal-delay-3">
+          <div class="card-shine" aria-hidden="true"></div>
+          <div class="app-card-badge"><span class="badge-dot"></span>Live Now</div>
           <div class="app-icon manike-icon">
             <img src="manike-icon.png" alt="Manike" />
+            <div class="icon-glow" aria-hidden="true"></div>
           </div>
           <div class="app-info">
             <h3 class="app-name">Manike · මැණිකේ</h3>
@@ -105,7 +130,8 @@
         </div>
 
         <!-- Future app placeholder -->
-        <div class="app-card upcoming reveal reveal-delay-4">
+        <div class="app-card upcoming glass tilt reveal reveal-delay-4">
+          <div class="card-shine" aria-hidden="true"></div>
           <div class="app-card-badge upcoming-badge">Coming Soon</div>
           <div class="app-icon upcoming-icon">
             <span>✦</span>
@@ -123,11 +149,11 @@
   </section>
 
   <!-- Manike Features -->
-  <section class="section section-dark manike-section" id="manike">
+  <section class="section manike-section" id="manike">
     <div class="container">
 
       <div class="manike-header">
-        <div class="manike-header-icon">
+        <div class="manike-header-icon glass">
           <img src="manike-icon.png" alt="Manike" />
         </div>
         <div>
@@ -141,42 +167,42 @@
       <div class="features-category-label reveal">✦ Cultural Identity Features</div>
       <div class="features-grid">
 
-        <div class="feature-card feature-gold reveal reveal-delay-1">
+        <div class="feature-card feature-gold glass tilt reveal reveal-delay-1">
           <div class="feature-icon">🏛️</div>
           <h4 class="feature-title">Poruwa System</h4>
           <p class="feature-desc">Instead of swiping, send a <em>Poruwa</em> — a traditional proposal of interest. Inspired by Sri Lanka's sacred wedding platform. Meaningful from the very first moment.</p>
           <div class="feature-unique-badge">Unique to Manike</div>
         </div>
 
-        <div class="feature-card feature-gold reveal reveal-delay-2">
+        <div class="feature-card feature-gold glass tilt reveal reveal-delay-2">
           <div class="feature-icon">⭐</div>
           <h4 class="feature-title">Lagna · ලග්න Matching</h4>
           <p class="feature-desc">Horoscope compatibility built right into the app. Match on Lagna signs the way Sri Lankan and South Indian families have done for generations — now digitised for modern life.</p>
           <div class="feature-unique-badge">Unique to Manike</div>
         </div>
 
-        <div class="feature-card feature-gold reveal reveal-delay-3">
+        <div class="feature-card feature-gold glass tilt reveal reveal-delay-3">
           <div class="feature-icon">🌺</div>
           <h4 class="feature-title">Kulaya · කුලය</h4>
           <p class="feature-desc">Express your cultural heritage and community identity with sensitivity and respect. Find someone who shares your roots — handled with the nuance this topic deserves.</p>
           <div class="feature-unique-badge">Unique to Manike</div>
         </div>
 
-        <div class="feature-card feature-gold reveal reveal-delay-1">
+        <div class="feature-card feature-gold glass tilt reveal reveal-delay-1">
           <div class="feature-icon">🔮</div>
           <h4 class="feature-title">Western Zodiac</h4>
           <p class="feature-desc">For those who follow western astrology, Manike includes your star sign as a separate identity layer alongside Lagna — because Sri Lankans carry both traditions.</p>
           <div class="feature-unique-badge">Unique to Manike</div>
         </div>
 
-        <div class="feature-card feature-gold reveal reveal-delay-2">
+        <div class="feature-card feature-gold glass tilt reveal reveal-delay-2">
           <div class="feature-icon">🏅</div>
           <h4 class="feature-title">Family Approval Badge</h4>
           <p class="feature-desc">Toggle "මගේ පවුල දනිති" — My Family Knows — to show a deep maroon badge on your profile. A powerful trust signal for serious, family-oriented relationships.</p>
           <div class="feature-unique-badge">Unique to Manike</div>
         </div>
 
-        <div class="feature-card feature-gold reveal reveal-delay-3">
+        <div class="feature-card feature-gold glass tilt reveal reveal-delay-3">
           <div class="feature-icon">👨‍👩‍👧</div>
           <h4 class="feature-title">Parent Mode</h4>
           <p class="feature-desc">Parents can browse profiles and shortlist matches on behalf of their son or daughter — the child gets final approval. Designed for how families in Sri Lanka actually work.</p>
@@ -186,24 +212,24 @@
       </div>
 
       <!-- Safety Features -->
-      <div class="features-category-label reveal" style="margin-top: 56px;">🔒 Safety & Trust Features</div>
+      <div class="features-category-label reveal" style="margin-top: 56px;">🔒 Safety &amp; Trust Features</div>
       <div class="features-grid">
 
-        <div class="feature-card feature-maroon reveal reveal-delay-1">
+        <div class="feature-card feature-maroon glass tilt reveal reveal-delay-1">
           <div class="feature-icon">🤝</div>
           <h4 class="feature-title">Chaperone Mode</h4>
           <p class="feature-desc">Invite a trusted friend to silently monitor your chat before a first date. They can see the conversation and step in if anything feels wrong. Safety built into every connection.</p>
           <div class="feature-unique-badge feature-unique-badge-maroon">Unique to Manike</div>
         </div>
 
-        <div class="feature-card feature-maroon reveal reveal-delay-2">
+        <div class="feature-card feature-maroon glass tilt reveal reveal-delay-2">
           <div class="feature-icon">🪪</div>
           <h4 class="feature-title">NIC Verification</h4>
           <p class="feature-desc">Verify your identity with your Sri Lanka National Identity Card or Passport. Verified users receive a blue badge — so you always know you're talking to a real person.</p>
           <div class="feature-unique-badge feature-unique-badge-maroon">Sri Lanka Specific</div>
         </div>
 
-        <div class="feature-card feature-maroon reveal reveal-delay-3">
+        <div class="feature-card feature-maroon glass tilt reveal reveal-delay-3">
           <div class="feature-icon">🌐</div>
           <h4 class="feature-title">Three Languages</h4>
           <p class="feature-desc">The entire app — every screen, every prompt — is available in Sinhala, Tamil and English. Switch anytime. Your language, your comfort, your choice.</p>
@@ -213,7 +239,8 @@
       </div>
 
       <!-- Callout banner -->
-      <div class="manike-callout">
+      <div class="manike-callout glass reveal">
+        <div class="callout-aurora" aria-hidden="true"></div>
         <div class="manike-callout-text">
           <h3>No other dating app in Sri Lanka offers this.</h3>
           <p>Tinder, Bumble, Hinge — they were built for the West. Manike was built for <em>us</em>.</p>
@@ -233,8 +260,8 @@
   <!-- About -->
   <section class="section" id="about">
     <div class="container">
-      <div class="section-label reveal">Who We Are</div>
-      <h2 class="section-title reveal reveal-delay-1">About Stardust Innovations</h2>
+      <div class="section-label reveal">✦ Who We Are</div>
+      <h2 class="section-title reveal reveal-delay-1">About <span class="gradient-text">Stardust Innovations</span></h2>
       <div class="about-grid">
         <div class="about-text reveal reveal-delay-2">
           <p>
@@ -248,22 +275,22 @@
           </p>
         </div>
         <div class="values-grid">
-          <div class="value-card reveal reveal-delay-2">
+          <div class="value-card glass tilt reveal reveal-delay-2">
             <div class="value-icon">🔒</div>
             <h4>Safety First</h4>
             <p>Every product we build puts user safety at the centre of every decision.</p>
           </div>
-          <div class="value-card reveal reveal-delay-3">
+          <div class="value-card glass tilt reveal reveal-delay-3">
             <div class="value-icon">🌏</div>
             <h4>Built for South Asia</h4>
             <p>We understand our culture, our values and our users deeply.</p>
           </div>
-          <div class="value-card reveal reveal-delay-4">
+          <div class="value-card glass tilt reveal reveal-delay-4">
             <div class="value-icon">✦</div>
             <h4>Premium Quality</h4>
             <p>We build products that feel world-class, not compromised.</p>
           </div>
-          <div class="value-card reveal reveal-delay-5">
+          <div class="value-card glass tilt reveal reveal-delay-5">
             <div class="value-icon">🤝</div>
             <h4>Trust</h4>
             <p>We earn trust through transparency, verified identities and honest practices.</p>
@@ -274,31 +301,31 @@
   </section>
 
   <!-- Contact -->
-  <section class="section section-dark" id="contact">
+  <section class="section" id="contact">
     <div class="container">
-      <div class="section-label reveal">Get in Touch</div>
-      <h2 class="section-title reveal reveal-delay-1">Contact Us</h2>
+      <div class="section-label reveal">✦ Get in Touch</div>
+      <h2 class="section-title reveal reveal-delay-1">Contact <span class="gradient-text">Us</span></h2>
       <p class="section-sub reveal reveal-delay-2">For app support, business enquiries or partnership opportunities.</p>
 
       <div class="contact-grid">
-        <div class="contact-card reveal reveal-delay-2">
+        <div class="contact-card glass tilt reveal reveal-delay-2">
           <div class="contact-icon">📧</div>
           <h4>General Enquiries</h4>
           <a href="mailto:hello@stardust-innovations.com">hello@stardust-innovations.com</a>
         </div>
-        <div class="contact-card reveal reveal-delay-3">
+        <div class="contact-card glass tilt reveal reveal-delay-3">
           <div class="contact-icon">🛟</div>
           <h4>App Support</h4>
           <a href="mailto:support@stardust-innovations.com">support@stardust-innovations.com</a>
         </div>
-        <div class="contact-card reveal reveal-delay-4">
+        <div class="contact-card glass tilt reveal reveal-delay-4">
           <div class="contact-icon">🤝</div>
-          <h4>Business & Partnerships</h4>
+          <h4>Business &amp; Partnerships</h4>
           <a href="mailto:business@stardust-innovations.com">business@stardust-innovations.com</a>
         </div>
       </div>
 
-      <div class="legal-links">
+      <div class="legal-links reveal">
         <a href="privacy.html">Privacy Policy</a>
         <span>·</span>
         <a href="terms.html">Terms of Service</a>
