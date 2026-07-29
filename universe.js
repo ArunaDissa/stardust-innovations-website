@@ -355,33 +355,44 @@ function targetsBrain() {
   for (let i = 0; i < HERO_N; i++) {
     const th = Math.random() * Math.PI * 2;
     const ph = Math.acos(2 * Math.random() - 1);
-    let r = 1 + 0.09 * Math.sin(6 * ph) * Math.sin(9 * th) + 0.05 * Math.sin(14 * th);
-    let x = 17 * r * Math.sin(ph) * Math.cos(th);
-    let y = 12 * r * Math.cos(ph);
-    let z = 13.5 * r * Math.sin(ph) * Math.sin(th);
-    x += Math.sign(x) * 1.1; // hemispheres
-    if (y < -6) y *= 0.75;   // flatten base
+    // deeper cortical folds so the silhouette clearly reads as a brain
+    let r = 1 + 0.13 * Math.sin(6 * ph) * Math.sin(9 * th) + 0.07 * Math.sin(13 * th + 2 * ph);
+    let x = 16 * r * Math.sin(ph) * Math.cos(th);
+    let y = 11.5 * r * Math.cos(ph);
+    let z = 13 * r * Math.sin(ph) * Math.sin(th);
+    x += Math.sign(x) * 1.5; // hemisphere split
+    if (y < -6) y *= 0.7;    // flatten base
+    if (y < -2 && Math.abs(x) < 5 && z > 6) y -= 3; // hint of a brain stem shadow
     pos[i * 3] = x; pos[i * 3 + 1] = y + 1; pos[i * 3 + 2] = z;
     const f = Math.random();
-    col[i * 3] = 0.65 + f * 0.3; col[i * 3 + 1] = 0.35 + f * 0.25; col[i * 3 + 2] = 0.95;
+    // saturated violet with electric synapse sparks
+    if (f > 0.93) { col[i * 3] = 0.55; col[i * 3 + 1] = 0.95; col[i * 3 + 2] = 1.0; }
+    else { col[i * 3] = 0.42 + f * 0.3; col[i * 3 + 1] = 0.18 + f * 0.16; col[i * 3 + 2] = 0.92; }
   }
   return { pos, col };
 }
 function targetsGalaxy() {
+  // face-on spiral in the x/y plane (the screen plane) so the arms are
+  // actually visible; stepHero adds spin and a gentle cinematic tilt
   const pos = new Float32Array(HERO_N * 3);
   const col = new Float32Array(HERO_N * 3);
   for (let i = 0; i < HERO_N; i++) {
     const arm = i % 3;
-    const r = 1.5 + Math.pow(Math.random(), 0.65) * 26;
-    const a = arm * ((Math.PI * 2) / 3) + r * 0.24 + (Math.random() - 0.5) * (0.7 - r * 0.015);
-    const y = (Math.random() + Math.random() + Math.random() - 1.5) * 1.6 * (1 - r / 32);
+    const r = 1.2 + Math.pow(Math.random(), 0.6) * 24;
+    const a = arm * ((Math.PI * 2) / 3) + r * 0.27 + (Math.random() - 0.5) * (0.65 - r * 0.014);
+    const thick = (Math.random() + Math.random() + Math.random() - 1.5) * 1.5 * (1 - r / 30);
     pos[i * 3] = Math.cos(a) * r;
-    pos[i * 3 + 1] = y + 1;
-    pos[i * 3 + 2] = Math.sin(a) * r * 0.85;
-    const core = 1 - Math.min(1, r / 26);
-    col[i * 3] = 0.45 + core * 0.55;
-    col[i * 3 + 1] = 0.55 + core * 0.4;
-    col[i * 3 + 2] = 0.9;
+    pos[i * 3 + 1] = Math.sin(a) * r * 0.94;
+    pos[i * 3 + 2] = thick * 2.2;
+    const core = 1 - Math.min(1, r / 24);
+    if (core > 0.72) {
+      // golden galactic core
+      col[i * 3] = 0.98; col[i * 3 + 1] = 0.85; col[i * 3 + 2] = 0.6;
+    } else {
+      col[i * 3] = 0.45 + core * 0.5;
+      col[i * 3 + 1] = 0.58 + core * 0.35;
+      col[i * 3 + 2] = 0.95;
+    }
   }
   return { pos, col };
 }
@@ -422,8 +433,9 @@ function stepHero() {
   const colAttr = hero.geo.getAttribute("color");
   const p = posAttr.array, c = colAttr.array;
   const t = hero.morphStart < 0 ? 1 : Math.min((clockT - hero.morphStart) / hero.morphDur, 1);
-  const rot = hero.phase === "galaxy" ? clockT * 0.1 : 0;
+  const rot = hero.phase === "galaxy" ? clockT * 0.12 : 0;
   const cosR = Math.cos(rot), sinR = Math.sin(rot);
+  const TILT_C = Math.cos(0.42), TILT_S = Math.sin(0.42); // cinematic disc tilt
   for (let i = 0; i < HERO_N; i++) {
     const d = hero.delay[i];
     const f = Ease.smooth(Math.max(0, Math.min(1, (t * (1 + d) - d) / 1)));
@@ -431,7 +443,14 @@ function stepHero() {
     let x = hero.from[i3] + (hero.to[i3] - hero.from[i3]) * f;
     let y = hero.from[i3 + 1] + (hero.to[i3 + 1] - hero.from[i3 + 1]) * f;
     let z = hero.from[i3 + 2] + (hero.to[i3 + 2] - hero.from[i3 + 2]) * f;
-    if (rot) { const nx = x * cosR - z * sinR; z = x * sinR + z * cosR; x = nx; }
+    if (rot) {
+      // spin the disc around its own axis, then tip it toward the camera
+      const nx = x * cosR - y * sinR;
+      const ny = x * sinR + y * cosR;
+      x = nx;
+      y = ny * TILT_C - z * TILT_S + 1;
+      z = ny * TILT_S + z * TILT_C;
+    }
     const w = hero.wobblePhase[i];
     p[i3] = x + Math.sin(clockT * 0.8 + w) * 0.14;
     p[i3 + 1] = y + Math.sin(clockT * 0.6 + w * 1.7) * 0.14;
@@ -450,7 +469,9 @@ function stepHero() {
   // idle cycle
   if (hero.cycling && !REDUCED && state.view === "home") {
     hero.cycleTimer += dtGlobal;
-    if (hero.cycleTimer > 9) {
+    // the logo is the brand — let it hold much longer than the other shapes
+    const hold = hero.cycle[hero.cycleIdx] === "logo" ? 16 : 7;
+    if (hero.cycleTimer > hold) {
       hero.cycleTimer = 0;
       hero.cycleIdx = (hero.cycleIdx + 1) % hero.cycle.length;
       morphTo(hero.cycle[hero.cycleIdx], 3.2);
@@ -464,12 +485,13 @@ function stepHero() {
 /* ============================================================
    ZONES — five star systems
    ============================================================ */
+// angles keep the lower-center clear for the hero message
 const ZONES = [
   { id: "core", name: "The Core", sub: "our vision", color: 0x6ee7ff, angle: 90 },
-  { id: "forge", name: "The Forge", sub: "what we build", color: 0xffd479, angle: 162 },
-  { id: "archive", name: "The Archive", sub: "our story", color: 0xc9a2ff, angle: 234 },
-  { id: "observatory", name: "The Observatory", sub: "AI research", color: 0x7dffc9, angle: 306 },
-  { id: "nexus", name: "The Nexus", sub: "contact", color: 0x8fb4ff, angle: 18 },
+  { id: "forge", name: "The Forge", sub: "what we build", color: 0xffd479, angle: 167 },
+  { id: "archive", name: "The Archive", sub: "our story", color: 0xc9a2ff, angle: 212 },
+  { id: "observatory", name: "The Observatory", sub: "AI research", color: 0x7dffc9, angle: 328 },
+  { id: "nexus", name: "The Nexus", sub: "contact", color: 0x8fb4ff, angle: 13 },
 ];
 const labelsBox = document.getElementById("labels");
 for (const z of ZONES) {
@@ -523,7 +545,7 @@ function layoutZones() {
   // keep every star system on screen whatever the aspect ratio
   const aspect = window.innerWidth / window.innerHeight;
   const xr = aspect < 1 ? 62 * Math.max(aspect * 1.2, 0.52) : 62;
-  const yr = aspect < 1 ? 48 : 34;
+  const yr = aspect < 1 ? 42 : 34;
   HOME_POS.z = aspect < 1 ? 168 : 132;
   for (const z of ZONES) {
     const a = (z.angle * Math.PI) / 180;
@@ -627,6 +649,7 @@ function unlockEnding() {
 }
 function playEnding() {
   state.view = "ending";
+  setHeroTag(false);
   closePanel(true);
   orbChat.classList.remove("open");
   document.getElementById("hud").classList.remove("on");
@@ -649,6 +672,7 @@ document.getElementById("endingStar").addEventListener("click", () => {
     tweenCamera(HOME_POS, new THREE.Vector3(0, 0, 0), 4);
     morphTo("logo", 3.5);
     hero.cycleTimer = -6;
+    setHeroTag(true);
     toast("Welcome back to the beginning ✦", 3200);
   }, 2000);
 });
@@ -658,6 +682,11 @@ document.getElementById("endingStar").addEventListener("click", () => {
    ============================================================ */
 const state = { view: "intro", zone: null, uiOn: false, navLock: false };
 const camPos = camera.position;
+const heroTag = document.getElementById("heroTag");
+function setHeroTag(show) {
+  heroTag.classList.toggle("on", !!show && state.uiOn);
+}
+document.getElementById("heroCta").addEventListener("click", () => zoomTo("forge"));
 function tweenCamera(pos, look, dur = 2.2, onDone) {
   const p0 = camPos.clone(), l0 = lookTarget.clone();
   tween(dur, (t) => {
@@ -669,6 +698,7 @@ function zoomTo(id, pushHash = true) {
   const z = ZONES.find((x) => x.id === id);
   if (!z || state.navLock || (state.view === "zone" && state.zone === id)) return;
   if (state.view === "zone") closePanel(true);
+  setHeroTag(false);
   if (!GL_OK) {
     state.view = "zone";
     state.zone = id;
@@ -695,13 +725,14 @@ function goHome(pushHash = true) {
   if (state.navLock) return;
   closePanel();
   if (pushHash && location.hash) history.pushState(null, "", location.pathname);
-  if (!GL_OK) { state.view = "home"; state.zone = null; return; }
+  if (!GL_OK) { state.view = "home"; state.zone = null; setHeroTag(true); return; }
   state.navLock = true;
   state.view = "traveling";
   state.zone = null;
   tweenCamera(HOME_POS, new THREE.Vector3(0, 0, 0), REDUCED ? 0.3 : 2, () => {
     state.view = "home";
     state.navLock = false;
+    setHeroTag(true);
   });
 }
 window.addEventListener("popstate", () => {
@@ -1092,6 +1123,7 @@ function revealUI(fadeDur) {
   state.uiOn = true;
   document.getElementById("hud").classList.add("on");
   orb.classList.add("on");
+  setHeroTag(true);
   if (GL_OK) fadeInZones();
   hero.cycling = true;
   hero.cycleTimer = -4;

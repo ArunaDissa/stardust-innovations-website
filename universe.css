@@ -234,12 +234,86 @@ a, button { cursor: pointer; }
 .zlabel.visited::after { content: " ·✦"; color: var(--gold); font-size: 10px; }
 
 /* ============================================================
+   PERSISTENT HERO MESSAGE
+   ============================================================ */
+#heroTag {
+  position: fixed;
+  left: 50%;
+  bottom: 9vh;
+  transform: translateX(-50%) translateY(14px);
+  z-index: 6;
+  text-align: center;
+  max-width: min(640px, 92vw);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .9s ease, transform .9s ease, visibility .9s;
+}
+#heroTag.on {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+/* text never swallows clicks meant for the universe — only the button is live */
+#heroTag.on #heroCta { pointer-events: auto; }
+#heroTag h2 {
+  font-family: var(--font-d);
+  font-weight: 500;
+  font-size: clamp(24px, 4.4vw, 42px);
+  letter-spacing: 0.03em;
+  color: var(--white);
+  text-shadow: 0 0 30px rgba(110, 231, 255, 0.3), 0 2px 18px rgba(0, 0, 0, 0.8);
+}
+#heroTag h2 em {
+  font-style: normal;
+  background: linear-gradient(120deg, var(--gold), #fff2d8, var(--gold));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 5s linear infinite;
+}
+#heroTag p {
+  margin-top: 10px;
+  font-size: clamp(12.5px, 1.6vw, 15px);
+  color: var(--dim);
+  line-height: 1.6;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9);
+}
+#heroTag p b { color: var(--gold); font-weight: 600; }
+#heroCta {
+  margin-top: 18px;
+  font-family: var(--font-d);
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  text-transform: uppercase;
+  color: #041020;
+  background: linear-gradient(120deg, var(--gold), #f4dfae);
+  border: none;
+  border-radius: 999px;
+  padding: 13px 34px;
+  box-shadow: 0 0 26px rgba(232, 196, 122, 0.35);
+  transition: transform .3s, box-shadow .3s;
+}
+#heroCta:hover, #heroCta:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(232, 196, 122, 0.6);
+}
+@media (max-width: 720px) {
+  #heroTag { bottom: 5vh; max-width: 86vw; }
+  #heroTag h2 { font-size: 22px; }
+  #heroTag p { font-size: 12px; margin-top: 6px; }
+  #heroCta { margin-top: 12px; font-size: 11px; padding: 11px 26px; }
+}
+
+/* ============================================================
    TOAST
    ============================================================ */
 #toast {
   position: fixed;
-  left: 50%; bottom: 40px;
-  transform: translateX(-50%) translateY(20px);
+  left: 50%; top: 82px;
+  transform: translateX(-50%) translateY(-20px);
   z-index: 26;
   background: var(--glass);
   border: 1px solid var(--glass-edge);
@@ -256,6 +330,7 @@ a, button { cursor: pointer; }
   text-align: center;
 }
 #toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+@media (max-width: 720px) { #toast { top: 70px; font-size: 12px; padding: 10px 18px; } }
 
 /* ============================================================
    PANELS
