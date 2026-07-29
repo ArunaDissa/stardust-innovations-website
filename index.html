@@ -3,383 +3,220 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stardust Innovations — Building Apps That Matter</title>
-  <meta name="description" content="Stardust Innovations is a Sri Lankan technology company building premium mobile apps. Home of Manike — Sri Lanka's first culture-first dating app." />
-  <link rel="icon" href="favicon.ico" />
+  <title>Stardust Innovations — Enter the Stardust Core</title>
+  <meta name="description" content="Stardust Innovations is a Sri Lankan technology company building premium mobile apps. Home of Manike — Sri Lanka's first culture-first dating app. Explore our interactive universe." />
+  <meta property="og:title" content="Stardust Innovations — Enter the Stardust Core" />
+  <meta property="og:description" content="An interactive universe. Explore The Core, The Forge, The Archive, The Observatory and The Nexus." />
+  <meta property="og:image" content="https://stardust-innovations.com/logo.png" />
+  <meta property="og:url" content="https://stardust-innovations.com" />
+  <link rel="icon" type="image/png" href="logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="universe.css" />
 </head>
 <body>
 
-  <!-- Cosmic background layers -->
-  <canvas id="starfield" aria-hidden="true"></canvas>
-  <div class="aurora" aria-hidden="true">
-    <div class="aurora-orb aurora-orb-1"></div>
-    <div class="aurora-orb aurora-orb-2"></div>
-    <div class="aurora-orb aurora-orb-3"></div>
+  <!-- WebGL universe -->
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <!-- Cursor energy-field overlay -->
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <!-- ENTER SCREEN -->
+  <div id="enter" role="dialog" aria-label="Welcome">
+    <div class="enter-inner">
+      <div class="enter-star" aria-hidden="true">✦</div>
+      <h1 class="enter-title">STARDUST<span>INNOVATIONS</span></h1>
+      <p class="enter-sub">An interactive universe awaits.</p>
+      <button id="enterBtn" class="enter-btn"><span>Enter the Core</span></button>
+      <button id="enterQuiet" class="enter-quiet">enter without sound</button>
+    </div>
   </div>
-  <div class="grid-overlay" aria-hidden="true"></div>
-  <div class="noise" aria-hidden="true"></div>
 
-  <!-- Navigation -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <img src="logo.png" alt="Stardust Innovations" class="nav-logo-img" />
-      </a>
-      <div class="nav-links">
-        <a href="#apps">Apps</a>
-        <a href="#manike">Manike</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="privacy.html">Privacy</a>
+  <!-- Cinematic word intro -->
+  <div id="words" aria-hidden="true"></div>
+
+  <!-- HUD -->
+  <header id="hud" aria-hidden="true">
+    <button id="homeBtn" class="hud-logo" title="Return to the universe">
+      <img src="logo.png" alt="Stardust Innovations" />
+    </button>
+    <div class="hud-right">
+      <div id="journeyDots" class="journey" title="Your journey">
+        <span data-z="core"></span><span data-z="forge"></span><span data-z="archive"></span><span data-z="observatory"></span><span data-z="nexus"></span>
       </div>
-      <button class="nav-menu-btn" onclick="toggleMenu()" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <button id="soundBtn" class="hud-btn" aria-label="Toggle sound">♪</button>
     </div>
-    <div class="nav-mobile" id="mobileMenu">
-      <a href="#apps" onclick="toggleMenu()">Apps</a>
-      <a href="#manike" onclick="toggleMenu()">Manike</a>
-      <a href="#about" onclick="toggleMenu()">About</a>
-      <a href="#contact" onclick="toggleMenu()">Contact</a>
-      <a href="privacy.html" onclick="toggleMenu()">Privacy</a>
-    </div>
-  </nav>
+  </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-rings" aria-hidden="true">
-      <div class="ring ring-1"></div>
-      <div class="ring ring-2"></div>
-      <div class="ring ring-3"></div>
-    </div>
-    <div class="container hero-content">
-      <div class="hero-badge reveal">
-        <span class="badge-pulse"></span>
-        🇱🇰 Based in Sri Lanka
+  <!-- Zone labels (projected from 3D) -->
+  <div id="labels" aria-hidden="true"></div>
+
+  <!-- Toast -->
+  <div id="toast" aria-live="polite"></div>
+
+  <!-- ZONE PANELS -->
+  <main id="panels">
+
+    <section class="panel" id="panel-core" data-zone="core" aria-hidden="true" tabindex="-1">
+      <div class="panel-card">
+        <button class="panel-close" aria-label="Return to universe">✕</button>
+        <div class="panel-tag" style="--zc:#6ee7ff">✦ The Core</div>
+        <h2>Building Apps <em>That Matter</em></h2>
+        <p class="panel-lead">🇱🇰 Based in Sri Lanka — Stardust Innovations is a Sri Lankan technology company crafting premium mobile experiences for South Asia and beyond.</p>
+        <p>Stardust Innovations is a technology company based in Sri Lanka, building mobile applications for the South Asian market and the global Sri Lankan diaspora.</p>
+        <p>We believe great technology should feel local — designed with cultural understanding, built with world-class standards, and trusted by the people who use it every day.</p>
+        <p>Every app we build is guided by three principles: <b>safety first</b>, <b>privacy by design</b>, and <b>genuine value</b> for our users.</p>
+        <div class="value-row">
+          <div class="value"><i>🔒</i><b>Safety First</b><small>Every product we build puts user safety at the centre of every decision.</small></div>
+          <div class="value"><i>🌏</i><b>Built for South Asia</b><small>We understand our culture, our values and our users deeply.</small></div>
+          <div class="value"><i>✦</i><b>Premium Quality</b><small>We build products that feel world-class, not compromised.</small></div>
+          <div class="value"><i>🤝</i><b>Trust</b><small>We earn trust through transparency, verified identities and honest practices.</small></div>
+        </div>
       </div>
-      <h1 class="hero-title reveal reveal-delay-1">
-        Building Apps<br />
-        <span class="gradient-text" data-text="That Matter">That Matter</span>
-      </h1>
-      <p class="hero-sub reveal reveal-delay-2">
-        Stardust Innovations is a Sri Lankan technology company crafting premium mobile experiences for South Asia and beyond.
-      </p>
-      <div class="hero-btns reveal reveal-delay-3">
-        <a href="#apps" class="btn-primary"><span>Our Apps</span></a>
-        <a href="#about" class="btn-secondary"><span>Learn More</span></a>
-      </div>
-    </div>
-    <div class="hero-scroll reveal reveal-delay-4" aria-hidden="true">
-      <div class="scroll-line"></div>
-      <span>Scroll</span>
-    </div>
-  </section>
+    </section>
 
-  <!-- Apps -->
-  <section class="section" id="apps">
-    <div class="container">
-      <div class="section-label reveal">✦ What We Build</div>
-      <h2 class="section-title reveal reveal-delay-1">Our <span class="gradient-text">Apps</span></h2>
-      <p class="section-sub reveal reveal-delay-2">Each app is built with care, security and the needs of South Asian users at its core.</p>
+    <section class="panel" id="panel-forge" data-zone="forge" aria-hidden="true" tabindex="-1">
+      <div class="panel-card">
+        <button class="panel-close" aria-label="Return to universe">✕</button>
+        <div class="panel-tag" style="--zc:#ffd479">🔥 The Forge</div>
+        <h2>What We <em>Build</em></h2>
 
-      <div class="apps-grid">
-        <!-- Manike -->
-        <div class="app-card featured glass tilt reveal reveal-delay-3">
-          <div class="card-shine" aria-hidden="true"></div>
-          <div class="app-card-badge"><span class="badge-dot"></span>Live Now</div>
-          <div class="app-icon manike-icon">
-            <img src="manike-icon.png" alt="Manike" />
-            <div class="icon-glow" aria-hidden="true"></div>
-          </div>
-          <div class="app-info">
-            <h3 class="app-name">Manike · මැණිකේ</h3>
-            <p class="app-tagline">Sri Lanka's Culture-First Dating App</p>
-            <p class="app-desc">
-              The only dating app built for Sri Lankans — with Lagna horoscope matching, the Poruwa proposal system, Parent Mode, Chaperone Mode, NIC verification, and full Sinhala, Tamil and English support. No other app comes close.
-            </p>
-            <div class="app-tags">
-              <span class="tag">🏛️ Poruwa System</span>
-              <span class="tag">⭐ Lagna Matching</span>
-              <span class="tag">🪪 NIC Verified</span>
-              <span class="tag">👨‍👩‍👧 Parent Mode</span>
-              <span class="tag">🤝 Chaperone Mode</span>
-              <span class="tag">🌐 3 Languages</span>
-            </div>
-            <div class="app-store-btns">
-              <a href="#" class="store-btn">
-                <span class="store-icon">🍎</span>
-                <span>
-                  <small>Coming soon on</small>
-                  App Store
-                </span>
-              </a>
-              <a href="#" class="store-btn">
-                <span class="store-icon">▶</span>
-                <span>
-                  <small>Coming soon on</small>
-                  Google Play
-                </span>
-              </a>
-            </div>
-            <a href="#manike" class="manike-learn-more">See all features ↓</a>
+        <p class="panel-lead">Each app is built with care, security and the needs of South Asian users at its core.</p>
+
+        <div class="holo">
+          <div class="holo-ring" aria-hidden="true"></div>
+          <img src="manike-icon.png" alt="Manike app icon" class="holo-icon" />
+          <div class="holo-info">
+            <span class="live-badge">● Live Now</span>
+            <h3>Manike · මැණිකේ · மாணிக்கம்</h3>
+            <p class="holo-tagline">Sri Lanka's Culture-First Dating App</p>
+            <p>The only dating app built for Sri Lankans — with Lagna horoscope matching, the Poruwa proposal system, Parent Mode, Chaperone Mode, NIC verification, and full Sinhala, Tamil and English support. No other app comes close.</p>
+            <p class="holo-sub">Built for Sri Lankan culture. Unlike anything else. Every feature was designed around how Sri Lankans actually find life partners — through family, culture, astrology, and trust. No Western app offers this.</p>
           </div>
         </div>
 
-        <!-- Future app placeholder -->
-        <div class="app-card upcoming glass tilt reveal reveal-delay-4">
-          <div class="card-shine" aria-hidden="true"></div>
-          <div class="app-card-badge upcoming-badge">Coming Soon</div>
-          <div class="app-icon upcoming-icon">
-            <span>✦</span>
+        <div class="feature-cols">
+          <div>
+            <h4 class="fc-title gold">✦ Cultural Identity Features</h4>
+            <ul class="fc-list">
+              <li><b>🏛️ Poruwa System</b> <span class="ubadge">Unique to Manike</span><br/>Instead of swiping, send a <em>Poruwa</em> — a traditional proposal of interest. Inspired by Sri Lanka's sacred wedding platform. Meaningful from the very first moment.</li>
+              <li><b>⭐ Lagna · ලග්න Matching</b> <span class="ubadge">Unique to Manike</span><br/>Horoscope compatibility built right into the app. Match on Lagna signs the way Sri Lankan and South Indian families have done for generations — now digitised for modern life.</li>
+              <li><b>🌺 Kulaya · කුලය</b> <span class="ubadge">Unique to Manike</span><br/>Express your cultural heritage and community identity with sensitivity and respect. Find someone who shares your roots — handled with the nuance this topic deserves.</li>
+              <li><b>🔮 Western Zodiac</b> <span class="ubadge">Unique to Manike</span><br/>For those who follow western astrology, Manike includes your star sign as a separate identity layer alongside Lagna — because Sri Lankans carry both traditions.</li>
+              <li><b>🏅 Family Approval Badge</b> <span class="ubadge">Unique to Manike</span><br/>Toggle "මගේ පවුල දනිති" — My Family Knows — to show a deep maroon badge on your profile. A powerful trust signal for serious, family-oriented relationships.</li>
+              <li><b>👨‍👩‍👧 Parent Mode</b> <span class="ubadge">Unique to Manike</span><br/>Parents can browse profiles and shortlist matches on behalf of their son or daughter — the child gets final approval. Designed for how families in Sri Lanka actually work.</li>
+            </ul>
           </div>
-          <div class="app-info">
-            <h3 class="app-name">Next App</h3>
-            <p class="app-tagline">Something new is coming</p>
-            <p class="app-desc">
-              We are always working on something new. Follow us to be the first to know about our next product.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Manike Features -->
-  <section class="section manike-section" id="manike">
-    <div class="container">
-
-      <div class="manike-header">
-        <div class="manike-header-icon glass">
-          <img src="manike-icon.png" alt="Manike" />
-        </div>
-        <div>
-          <div class="section-label">Manike · මැණිකේ · மாணிக்கம்</div>
-          <h2 class="section-title">Built for Sri Lankan Culture.<br /><span class="gradient-text">Unlike Anything Else.</span></h2>
-          <p class="section-sub">Every feature was designed around how Sri Lankans actually find life partners — through family, culture, astrology, and trust. No Western app offers this.</p>
-        </div>
-      </div>
-
-      <!-- Cultural Features -->
-      <div class="features-category-label reveal">✦ Cultural Identity Features</div>
-      <div class="features-grid">
-
-        <div class="feature-card feature-gold glass tilt reveal reveal-delay-1">
-          <div class="feature-icon">🏛️</div>
-          <h4 class="feature-title">Poruwa System</h4>
-          <p class="feature-desc">Instead of swiping, send a <em>Poruwa</em> — a traditional proposal of interest. Inspired by Sri Lanka's sacred wedding platform. Meaningful from the very first moment.</p>
-          <div class="feature-unique-badge">Unique to Manike</div>
-        </div>
-
-        <div class="feature-card feature-gold glass tilt reveal reveal-delay-2">
-          <div class="feature-icon">⭐</div>
-          <h4 class="feature-title">Lagna · ලග්න Matching</h4>
-          <p class="feature-desc">Horoscope compatibility built right into the app. Match on Lagna signs the way Sri Lankan and South Indian families have done for generations — now digitised for modern life.</p>
-          <div class="feature-unique-badge">Unique to Manike</div>
-        </div>
-
-        <div class="feature-card feature-gold glass tilt reveal reveal-delay-3">
-          <div class="feature-icon">🌺</div>
-          <h4 class="feature-title">Kulaya · කුලය</h4>
-          <p class="feature-desc">Express your cultural heritage and community identity with sensitivity and respect. Find someone who shares your roots — handled with the nuance this topic deserves.</p>
-          <div class="feature-unique-badge">Unique to Manike</div>
-        </div>
-
-        <div class="feature-card feature-gold glass tilt reveal reveal-delay-1">
-          <div class="feature-icon">🔮</div>
-          <h4 class="feature-title">Western Zodiac</h4>
-          <p class="feature-desc">For those who follow western astrology, Manike includes your star sign as a separate identity layer alongside Lagna — because Sri Lankans carry both traditions.</p>
-          <div class="feature-unique-badge">Unique to Manike</div>
-        </div>
-
-        <div class="feature-card feature-gold glass tilt reveal reveal-delay-2">
-          <div class="feature-icon">🏅</div>
-          <h4 class="feature-title">Family Approval Badge</h4>
-          <p class="feature-desc">Toggle "මගේ පවුල දනිති" — My Family Knows — to show a deep maroon badge on your profile. A powerful trust signal for serious, family-oriented relationships.</p>
-          <div class="feature-unique-badge">Unique to Manike</div>
-        </div>
-
-        <div class="feature-card feature-gold glass tilt reveal reveal-delay-3">
-          <div class="feature-icon">👨‍👩‍👧</div>
-          <h4 class="feature-title">Parent Mode</h4>
-          <p class="feature-desc">Parents can browse profiles and shortlist matches on behalf of their son or daughter — the child gets final approval. Designed for how families in Sri Lanka actually work.</p>
-          <div class="feature-unique-badge">Unique to Manike</div>
-        </div>
-
-      </div>
-
-      <!-- Safety Features -->
-      <div class="features-category-label reveal" style="margin-top: 56px;">🔒 Safety &amp; Trust Features</div>
-      <div class="features-grid">
-
-        <div class="feature-card feature-maroon glass tilt reveal reveal-delay-1">
-          <div class="feature-icon">🤝</div>
-          <h4 class="feature-title">Chaperone Mode</h4>
-          <p class="feature-desc">Invite a trusted friend to silently monitor your chat before a first date. They can see the conversation and step in if anything feels wrong. Safety built into every connection.</p>
-          <div class="feature-unique-badge feature-unique-badge-maroon">Unique to Manike</div>
-        </div>
-
-        <div class="feature-card feature-maroon glass tilt reveal reveal-delay-2">
-          <div class="feature-icon">🪪</div>
-          <h4 class="feature-title">NIC Verification</h4>
-          <p class="feature-desc">Verify your identity with your Sri Lanka National Identity Card or Passport. Verified users receive a blue badge — so you always know you're talking to a real person.</p>
-          <div class="feature-unique-badge feature-unique-badge-maroon">Sri Lanka Specific</div>
-        </div>
-
-        <div class="feature-card feature-maroon glass tilt reveal reveal-delay-3">
-          <div class="feature-icon">🌐</div>
-          <h4 class="feature-title">Three Languages</h4>
-          <p class="feature-desc">The entire app — every screen, every prompt — is available in Sinhala, Tamil and English. Switch anytime. Your language, your comfort, your choice.</p>
-          <div class="feature-unique-badge feature-unique-badge-maroon">Sri Lanka Specific</div>
-        </div>
-
-      </div>
-
-      <!-- Callout banner -->
-      <div class="manike-callout glass reveal">
-        <div class="callout-aurora" aria-hidden="true"></div>
-        <div class="manike-callout-text">
-          <h3>No other dating app in Sri Lanka offers this.</h3>
-          <p>Tinder, Bumble, Hinge — they were built for the West. Manike was built for <em>us</em>.</p>
-        </div>
-        <div class="manike-callout-langs">
-          <span>මැණිකේ</span>
-          <span>·</span>
-          <span>மாணிக்கம்</span>
-          <span>·</span>
-          <span>Manike</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- About -->
-  <section class="section" id="about">
-    <div class="container">
-      <div class="section-label reveal">✦ Who We Are</div>
-      <h2 class="section-title reveal reveal-delay-1">About <span class="gradient-text">Stardust Innovations</span></h2>
-      <div class="about-grid">
-        <div class="about-text reveal reveal-delay-2">
-          <p>
-            Stardust Innovations is a technology company based in Sri Lanka, building mobile applications for the South Asian market and the global Sri Lankan diaspora.
-          </p>
-          <p>
-            We believe great technology should feel local — designed with cultural understanding, built with world-class standards, and trusted by the people who use it every day.
-          </p>
-          <p>
-            Every app we build is guided by three principles: <strong>safety first</strong>, <strong>privacy by design</strong>, and <strong>genuine value</strong> for our users.
-          </p>
-        </div>
-        <div class="values-grid">
-          <div class="value-card glass tilt reveal reveal-delay-2">
-            <div class="value-icon">🔒</div>
-            <h4>Safety First</h4>
-            <p>Every product we build puts user safety at the centre of every decision.</p>
-          </div>
-          <div class="value-card glass tilt reveal reveal-delay-3">
-            <div class="value-icon">🌏</div>
-            <h4>Built for South Asia</h4>
-            <p>We understand our culture, our values and our users deeply.</p>
-          </div>
-          <div class="value-card glass tilt reveal reveal-delay-4">
-            <div class="value-icon">✦</div>
-            <h4>Premium Quality</h4>
-            <p>We build products that feel world-class, not compromised.</p>
-          </div>
-          <div class="value-card glass tilt reveal reveal-delay-5">
-            <div class="value-icon">🤝</div>
-            <h4>Trust</h4>
-            <p>We earn trust through transparency, verified identities and honest practices.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="section" id="contact">
-    <div class="container">
-      <div class="section-label reveal">✦ Get in Touch</div>
-      <h2 class="section-title reveal reveal-delay-1">Contact <span class="gradient-text">Us</span></h2>
-      <p class="section-sub reveal reveal-delay-2">For app support, business enquiries or partnership opportunities.</p>
-
-      <div class="contact-grid">
-        <div class="contact-card glass tilt reveal reveal-delay-2">
-          <div class="contact-icon">📧</div>
-          <h4>General Enquiries</h4>
-          <a href="mailto:hello@stardust-innovations.com">hello@stardust-innovations.com</a>
-        </div>
-        <div class="contact-card glass tilt reveal reveal-delay-3">
-          <div class="contact-icon">🛟</div>
-          <h4>App Support</h4>
-          <a href="mailto:support@stardust-innovations.com">support@stardust-innovations.com</a>
-        </div>
-        <div class="contact-card glass tilt reveal reveal-delay-4">
-          <div class="contact-icon">🤝</div>
-          <h4>Business &amp; Partnerships</h4>
-          <a href="mailto:business@stardust-innovations.com">business@stardust-innovations.com</a>
-        </div>
-      </div>
-
-      <div class="legal-links reveal">
-        <a href="privacy.html">Privacy Policy</a>
-        <span>·</span>
-        <a href="terms.html">Terms of Service</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-
-        <div class="footer-brand-col">
-          <img src="logo.png" alt="Stardust Innovations" class="footer-logo-img" />
-          <p class="footer-tagline">Building apps that matter,<br/>for the people who matter.</p>
-          <div class="footer-social">
-            <a href="https://www.instagram.com/stardust.innovations.lk" class="social-link" target="_blank" aria-label="Instagram">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </a>
-            <a href="https://www.linkedin.com/company/stardust-innovations-lk" class="social-link" target="_blank" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </a>
+          <div>
+            <h4 class="fc-title maroon">🔒 Safety &amp; Trust Features</h4>
+            <ul class="fc-list">
+              <li><b>🤝 Chaperone Mode</b> <span class="ubadge maroon">Unique to Manike</span><br/>Invite a trusted friend to silently monitor your chat before a first date. They can see the conversation and step in if anything feels wrong. Safety built into every connection.</li>
+              <li><b>🪪 NIC Verification</b> <span class="ubadge maroon">Sri Lanka Specific</span><br/>Verify your identity with your Sri Lanka National Identity Card or Passport. Verified users receive a blue badge — so you always know you're talking to a real person.</li>
+              <li><b>🌐 Three Languages</b> <span class="ubadge maroon">Sri Lanka Specific</span><br/>The entire app — every screen, every prompt — is available in Sinhala, Tamil and English. Switch anytime. Your language, your comfort, your choice.</li>
+            </ul>
+            <div class="callout"><b>No other dating app in Sri Lanka offers this.</b><br/>Tinder, Bumble, Hinge — they were built for the West. Manike was built for <em>us</em>.<br/><span class="callout-langs">මැණිකේ · மாணிக்கம் · Manike</span></div>
           </div>
         </div>
 
-        <div class="footer-links-group">
-          <h5>Company</h5>
-          <a href="#apps">Our Apps</a>
-          <a href="#about">About Us</a>
-          <a href="#contact">Contact</a>
+        <div class="store-row">
+          <span class="store-pill">🍎 App Store — coming soon</span>
+          <span class="store-pill">▶ Google Play — coming soon</span>
         </div>
 
-        <div class="footer-links-group">
-          <h5>Manike</h5>
-          <a href="#manike">Features</a>
-          <a href="#">App Store</a>
-          <a href="#">Google Play</a>
-        </div>
+        <div class="next-app">✦ <b>Next App — Coming Soon.</b> Something new is coming. We are always working on something new — follow us to be the first to know about our next product.</div>
+      </div>
+    </section>
 
-        <div class="footer-links-group">
-          <h5>Legal</h5>
+    <section class="panel" id="panel-archive" data-zone="archive" aria-hidden="true" tabindex="-1">
+      <div class="panel-card">
+        <button class="panel-close" aria-label="Return to universe">✕</button>
+        <div class="panel-tag" style="--zc:#c9a2ff">📜 The Archive</div>
+        <h2>Our <em>Story</em></h2>
+        <p class="panel-lead">Not dates on a page — chapters of a journey, each one a small light.</p>
+        <div class="timeline">
+          <div class="tl-item"><span class="tl-dot"></span><b>The Spark</b><p>A simple belief: the apps Sri Lankans use every day should be built by people who understand Sri Lanka.</p></div>
+          <div class="tl-item"><span class="tl-dot"></span><b>Stardust is Born</b><p>Stardust Innovations is founded — a company with three principles: safety first, privacy by design, genuine value.</p></div>
+          <div class="tl-item"><span class="tl-dot"></span><b>Forging Manike</b><p>Our first creation takes shape — a dating app where Poruwa, Lagna and family are features, not afterthoughts.</p></div>
+          <div class="tl-item"><span class="tl-dot"></span><b>The Road Ahead</b><p>Manike launches on the App Store and Google Play — and the next stars in this universe begin to form.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-observatory" data-zone="observatory" aria-hidden="true" tabindex="-1">
+      <div class="panel-card">
+        <button class="panel-close" aria-label="Return to universe">✕</button>
+        <div class="panel-tag" style="--zc:#7dffc9">🔭 The Observatory</div>
+        <h2>Exploring <em>AI</em></h2>
+        <p class="panel-lead">The Observatory is where we watch the horizon — researching how AI can make our products warmer, safer and more human.</p>
+        <ul class="obs-list">
+          <li><b>Culture-aware intelligence</b> — matching and recommendations that understand South Asian context, not just Western data.</li>
+          <li><b>AI companions</b> — early research into warm, voice-driven companion experiences inside our apps.</li>
+          <li><b>Safety AI</b> — using intelligence to detect bad actors and protect our users before harm happens.</li>
+        </ul>
+        <p class="obs-note">Work in the Observatory is research — when a star here is ready, it moves to The Forge.</p>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-nexus" data-zone="nexus" aria-hidden="true" tabindex="-1">
+      <div class="panel-card">
+        <button class="panel-close" aria-label="Return to universe">✕</button>
+        <div class="panel-tag" style="--zc:#8fb4ff">🛰 The Nexus</div>
+        <h2>Contact <em>Us</em></h2>
+        <p class="panel-lead">For app support, business enquiries or partnership opportunities. Every signal is answered.</p>
+        <div class="contact-row">
+          <a class="contact" href="mailto:hello@stardust-innovations.com"><i>📧</i><b>General Enquiries</b><small>hello@stardust-innovations.com</small></a>
+          <a class="contact" href="mailto:support@stardust-innovations.com"><i>🛟</i><b>App Support</b><small>support@stardust-innovations.com</small></a>
+          <a class="contact" href="mailto:business@stardust-innovations.com"><i>🤝</i><b>Business &amp; Partnerships</b><small>business@stardust-innovations.com</small></a>
+        </div>
+        <div class="social-row">
+          <a href="https://www.instagram.com/stardust.innovations.lk" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.linkedin.com/company/stardust-innovations-lk" target="_blank" rel="noopener">LinkedIn</a>
           <a href="privacy.html">Privacy Policy</a>
           <a href="terms.html">Terms of Service</a>
         </div>
-
+        <p class="nexus-foot">Building apps that matter, for the people who matter.<br/>© 2026 Stardust Innovations. All rights reserved. · Sri Lanka 🇱🇰</p>
       </div>
+    </section>
+  </main>
 
-      <div class="footer-bottom">
-        <span class="footer-copy">© 2026 Stardust Innovations. All rights reserved.</span>
-        <span class="footer-flag">Sri Lanka 🇱🇰</span>
-      </div>
+  <!-- GUIDE ORB -->
+  <button id="orb" aria-label="Open guide" aria-expanded="false">
+    <span class="orb-core"></span>
+  </button>
+  <div id="orbChat" role="dialog" aria-label="Guide" aria-hidden="true">
+    <div class="orb-head"><span class="orb-mini"></span> Astra — your guide <button id="orbClose" aria-label="Close guide">✕</button></div>
+    <div id="orbLog" class="orb-log"></div>
+    <div id="orbChips" class="orb-chips"></div>
+    <form id="orbForm" autocomplete="off">
+      <input id="orbInput" type="text" placeholder="Ask me anything…" maxlength="200" />
+      <button type="submit" aria-label="Send">➤</button>
+    </form>
+  </div>
+
+  <!-- ENDING -->
+  <div id="ending" aria-hidden="true">
+    <div class="ending-inner">
+      <p class="ending-text"></p>
+      <button id="endingStar" aria-label="Begin again">✦</button>
+      <p class="ending-hint">touch the star to begin again</p>
     </div>
-  </footer>
+  </div>
 
-  <script src="app.js"></script>
+  <!-- Corner legal (always reachable) -->
+  <div id="legalCorner"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
+
+  <noscript>
+    <div class="noscript">
+      <img src="logo.png" alt="Stardust Innovations" style="max-width:280px" />
+      <h1>Stardust Innovations</h1>
+      <p>A Sri Lankan technology company building premium mobile apps — home of <b>Manike</b>, Sri Lanka's culture-first dating app with Poruwa proposals, Lagna matching, Parent Mode, Chaperone Mode and NIC verification, in Sinhala, Tamil and English.</p>
+      <p>Contact: <a href="mailto:hello@stardust-innovations.com">hello@stardust-innovations.com</a> · <a href="mailto:support@stardust-innovations.com">support@stardust-innovations.com</a> · <a href="mailto:business@stardust-innovations.com">business@stardust-innovations.com</a></p>
+      <p><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></p>
+      <p>This site is an interactive 3D experience — please enable JavaScript to explore the universe.</p>
+    </div>
+  </noscript>
+
+  <script type="module" src="universe.js"></script>
 </body>
 </html>
